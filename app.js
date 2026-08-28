@@ -1,7 +1,12 @@
-// Trendy Shopping Point - Main Application Script
-const STORE_PHONE = "9944383508";
-const STORE_PHONE_INTL = "919944383508";
-const STORE_NAME = "Trendy Shopping Point";
+// Supabase Configuration
+const SUPABASE_URL = "https://xiooplqvxxormahtbqtc.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhpb29wbHF2eHxvcm1haHRicXRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4OTAwMzcsImV4cCI6MjEwMzQ2NjAzN30.hJJFLg_qkZ_VQeCxGsfMiVML-WIemfPfU5gTc9-8OjU";
+let supabaseClient = null;
+
+// Initialize Supabase client if SDK is loaded
+if (typeof supabase !== 'undefined' && supabase.createClient) {
+  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
 
 // State
 let products = [];
@@ -13,14 +18,53 @@ let sortBy = "default";
 let appliedCoupon = null;
 
 // Initialize
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   loadSavedState();
   initEventListeners();
   renderCategoryPills();
+  
+  // Try loading from Supabase first
+  await fetchProductsFromSupabase();
+  
   renderProducts();
   updateCartUI();
   updateWishlistUI();
 });
+
+// Fetch from Supabase
+async function fetchProductsFromSupabase() {
+  if (!supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    if (data && data.length > 0) {
+      // Map database schema to frontend properties
+      products = data.map(p => ({
+        id: p.id,
+        name: p.name,
+        category: p.category,
+        categoryLabel: p.category_label || p.category,
+        price: p.price,
+        originalPrice: p.original_price,
+        rating: p.rating || 5.0,
+        reviewsCount: p.reviews_count || 10,
+        badge: p.badge,
+        description: p.description,
+        image: p.image,
+        inStock: p.in_stock,
+        features: p.features || []
+      }));
+      console.log("Loaded products dynamically from Supabase!");
+    }
+  } catch (err) {
+    console.warn("Could not load from Supabase database. Falling back to local catalog:", err.message);
+  }
+}
 
 // Load State from LocalStorage
 function loadSavedState() {
