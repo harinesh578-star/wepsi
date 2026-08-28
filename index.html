@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trendy Shopping Point - Pens, Pencils, Slippers, Bags & Fancies</title>
+  <meta name="description" content="Trendy Shopping Point - Best collection of stationery pens, pencils, comfortable slippers, trendy bags, and fancy gift items. Order directly on WhatsApp!">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span>✨ Special Offer: Use Code <strong>TRENDY10</strong> for 10% OFF on all orders! ✨</span>
+    <a href="tel:+919944383508">📞 Call / WhatsApp: +91 9944383508</a>
+  </div>
+
+  <!-- Main Navbar -->
+  <nav class="navbar">
+    <a href="#" class="nav-brand" onclick="resetFilters()">
+      <div class="brand-icon">🛍️</div>
+      <div class="brand-text">
+        <span>Trendy Shopping Point</span>
+        <span class="tagline">Stationery • Footwear • Bags • Fancies</span>
+      </div>
+    </a>
+
+    <!-- Live Search -->
+    <div class="nav-search">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search pens, pencils, slippers, bags, fancies..." autocomplete="off">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <button class="admin-toggle-btn" onclick="openModal('contact-modal')" title="Contact & Store Info">
+        📞 <span>Contact</span>
+      </button>
+      <button class="admin-toggle-btn" onclick="openModal('admin-modal')" title="Shopkeeper Inventory Manager">
+        ⚙️ <span>Shopkeeper</span>
+      </button>
+      <button class="nav-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span id="theme-toggle-icon">🌙</span>
+      </button>
+      <button class="nav-btn" onclick="openModal('wishlist-modal')" title="View Wishlist">
+        <span>❤️</span>
+        <span class="badge-count" id="wishlist-badge">0</span>
+      </button>
+      <button class="nav-btn" onclick="toggleCartDrawer()" title="View Cart">
+        <span>🛒</span>
+        <span class="badge-count" id="cart-badge">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge">
+          <span>🔥 Trendy Shopping Hub</span>
+          <span>•</span>
+          <span>Best Prices in Town</span>
+        </div>
+        <h1 class="hero-title">Welcome to <br>Trendy Shopping Point</h1>
+        <p class="hero-subtitle">
+          Your one-stop destination for premium stationery (pens, pencils), stylish & comfortable slippers, everyday college & travel bags, and trending fancy gift accessories!
+        </p>
+
+        <div class="hero-features">
+          <div class="hero-pill">🖊️ Pens & Pencils</div>
+          <div class="hero-pill">🩴 Cozy Slippers</div>
+          <div class="hero-pill">🎒 Bags & Backpacks</div>
+          <div class="hero-pill">🎀 Fancy Accessories</div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#catalog" class="btn btn-white">
+            🛍️ Browse Catalog
+          </a>
+          <a href="https://wa.me/919944383508?text=Hello%20Trendy%20Shopping%20Point,%20I%20want%20to%20place%20an%20order" target="_blank" class="btn btn-whatsapp">
+            💬 WhatsApp: +91 9944383508
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick visual grid -->
+      <div class="hero-visual">
+        <div class="hero-card-preview" onclick="setCategory('pen')">
+          <span class="icon">🖊️</span>
+          <h4>Pens & Pencils</h4>
+          <p>Gel, Ball, Sketch & Art</p>
+        </div>
+        <div class="hero-card-preview" onclick="setCategory('slipper')">
+          <span class="icon">🩴</span>
+          <h4>Comfort Slippers</h4>
+          <p>Cloud slides & Flip-flops</p>
+        </div>
+        <div class="hero-card-preview" onclick="setCategory('bag')">
+          <span class="icon">🎒</span>
+          <h4>Trendy Bags</h4>
+          <p>Backpacks, Totes & Slings</p>
+        </div>
+        <div class="hero-card-preview" onclick="setCategory('fancies')">
+          <span class="icon">🎀</span>
+          <h4>Fancy Gifts</h4>
+          <p>Clips, Watches & Stickers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="main-container" id="catalog">
+    
+    <!-- Category Pills Filter -->
+    <section class="category-section">
+      <div class="section-header">
+        <h2 class="section-title">📦 Explore Categories</h2>
+      </div>
+      <div class="category-pills" id="category-pills">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="controls-left">
+        <span id="products-count">Showing items...</span>
+      </div>
+      <div class="controls-right">
+        <label for="sort-select" style="font-size: 13px; font-weight: 600;">Sort By:</label>
+        <select id="sort-select" class="select-dropdown">
+          <option value="default">Featured / Recommended</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Highest Rated</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="products-grid">
+      <!-- Rendered dynamically via JavaScript -->
+    </div>
+
+    <!-- Contact & Store Info Banner Section -->
+    <section class="contact-card-section" style="margin-top: 48px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(236, 72, 153, 0.08)); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 32px 24px; text-align: center;">
+      <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">📞 Have Questions or Custom Orders?</h2>
+      <p style="color: var(--text-muted); font-size: 14px; max-width: 600px; margin: 0 auto 20px;">
+        Reach out to <strong>Trendy Shopping Point</strong> directly on phone or WhatsApp. We are available for retail purchases, bulk stationery orders, gifts & customized queries!
+      </p>
+      
+      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+        <a href="tel:+919944383508" class="btn btn-white" style="border: 1px solid var(--border); font-size: 15px;">
+          📞 Call: +91 9944383508
+        </a>
+        <a href="https://wa.me/919944383508?text=Hello%20Trendy%20Shopping%20Point,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-whatsapp" style="font-size: 15px;">
+          💬 WhatsApp Chat (+91 9944383508)
+        </a>
+        <button class="btn btn-white" style="border: 1.5px solid var(--primary); color: var(--primary); font-size: 15px;" onclick="openModal('contact-modal')">
+          ✉️ Send Quick Message
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h4>🛍️ Trendy Shopping Point</h4>
+        <p>Quality stationery, fashionable slippers, stylish bags, and dazzling fancy gift items at budget-friendly prices.</p>
+        <p style="margin-top: 12px; font-weight: 700; color: var(--primary);">
+          📞 Contact / WhatsApp: <a href="tel:+919944383508" style="color: inherit; text-decoration: none;">+91 9944383508</a>
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Our Categories</h5>
+        <ul>
+          <li><a href="#catalog" onclick="setCategory('pen')">Pens (Roller, Gel, Fountain)</a></li>
+          <li><a href="#catalog" onclick="setCategory('pencil')">Pencils & Sketch Kits</a></li>
+          <li><a href="#catalog" onclick="setCategory('slipper')">Slippers & Daily Slides</a></li>
+          <li><a href="#catalog" onclick="setCategory('bag')">Backpacks & Tote Bags</a></li>
+          <li><a href="#catalog" onclick="setCategory('fancies')">Fancy Clips, Watches & Gifts</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Store Highlights</h5>
+        <ul>
+          <li>✅ 100% Genuine Quality Products</li>
+          <li>✅ Fast WhatsApp Order & Support</li>
+          <li>✅ Instant Bill / Invoice Generation</li>
+          <li>✅ Doorstep Local Delivery & Pickup</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 <strong>Trendy Shopping Point</strong>. All rights reserved. • Phone: +91 9944383508</p>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Shopping Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>🛒 Your Shopping Bag</h3>
+      <button class="close-btn" onclick="closeCartDrawer()">✕</button>
+    </div>
+
+    <div class="cart-items-list" id="cart-items-list">
+      <!-- Rendered dynamically -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="coupon-box">
+        <input type="text" id="coupon-code" class="coupon-input" placeholder="Coupon (e.g. TRENDY10)">
+        <button class="btn-apply-coupon" onclick="applyCoupon()">Apply</button>
+      </div>
+
+      <div class="cart-bill-breakdown">
+        <div class="bill-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">₹0</span>
+        </div>
+        <div class="bill-row">
+          <span>Discount (TRENDY10)</span>
+          <span id="cart-discount" style="color: var(--success);">- ₹0</span>
+        </div>
+        <div class="bill-row total">
+          <span>Grand Total</span>
+          <span id="cart-total" style="color: var(--primary);">₹0</span>
+        </div>
+      </div>
+
+      <div class="cart-actions">
+        <button class="btn btn-whatsapp" style="width: 100%;" onclick="orderViaWhatsApp()">
+          💬 Order on WhatsApp (+91 9944383508)
+        </button>
+        <button class="btn btn-white" style="width: 100%; border: 1.5px solid var(--primary); color: var(--primary);" onclick="openCheckoutModal()">
+          🧾 Generate Bill / Direct Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick View Modal -->
+  <div class="modal-overlay" id="quickview-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Product Details</h3>
+        <button class="close-btn" onclick="closeModal('quickview-modal')">✕</button>
+      </div>
+      <div class="modal-body" id="quickview-body">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout & Bill Info Modal -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🧾 Complete Your Order & Generate Bill</h3>
+        <button class="close-btn" onclick="closeModal('checkout-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="checkout-order-summary"></div>
+        <form onsubmit="processCheckout(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="cust-name" class="form-input" placeholder="e.g. Ramesh Kumar" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Phone Number *</label>
+            <input type="tel" id="cust-phone" class="form-input" placeholder="e.g. 9876543210" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery Address / Notes *</label>
+            <textarea id="cust-address" class="form-textarea" rows="2" placeholder="Street, landmark, city" required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Preference</label>
+            <select id="payment-method" class="form-select">
+              <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+              <option value="UPI / GPay / PhonePe / Paytm">UPI / GPay / PhonePe / Paytm</option>
+              <option value="Store Pickup">Store Pickup</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-white" style="width: 100%; background: var(--primary); color: white; margin-top: 12px;">
+            ✅ Confirm Order & Print Bill
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Printable Invoice / Receipt Modal -->
+  <div class="modal-overlay" id="invoice-modal">
+    <div class="modal-box" style="max-width: 650px;">
+      <div class="modal-header no-print">
+        <h3>🎉 Order Receipt / Invoice</h3>
+        <button class="close-btn" onclick="closeModal('invoice-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="invoice-content">
+          <!-- Rendered dynamically -->
+        </div>
+        <div class="no-print" style="display: flex; gap: 12px; margin-top: 20px;">
+          <button class="btn btn-white" style="flex: 1; border: 1.5px solid var(--border);" onclick="window.print()">
+            🖨️ Print / Save Receipt
+          </button>
+          <button class="btn btn-whatsapp" style="flex: 1;" onclick="orderViaWhatsApp()">
+            💬 Send to Store WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Modal -->
+  <div class="modal-overlay" id="wishlist-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>❤️ Your Saved Wishlist</h3>
+        <button class="close-btn" onclick="closeModal('wishlist-modal')">✕</button>
+      </div>
+      <div class="modal-body" id="wishlist-content">
+        <p style="color: var(--text-muted); text-align: center; padding: 20px;">Items you heart will appear here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shopkeeper / Admin Inventory Modal -->
+  <div class="modal-overlay" id="admin-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>⚙️ Shopkeeper Inventory Dashboard</h3>
+        <button class="close-btn" onclick="closeModal('admin-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--primary);">➕ Add New Product</h4>
+        <form id="add-product-form" onsubmit="handleAddProduct(event)">
+          <div class="form-group">
+            <label class="form-label">Product Name *</label>
+            <input type="text" id="prod-name" class="form-input" placeholder="e.g. Trendy Ball Pen Blue" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category *</label>
+            <select id="prod-category" class="form-select">
+              <option value="pen">Pens</option>
+              <option value="pencil">Pencils</option>
+              <option value="slipper">Slippers</option>
+              <option value="bag">Bags</option>
+              <option value="fancies">Fancies & Gifts</option>
+            </select>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Selling Price (₹) *</label>
+              <input type="number" id="prod-price" class="form-input" placeholder="199" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Original / MRP (₹)</label>
+              <input type="number" id="prod-orig-price" class="form-input" placeholder="299">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Image URL</label>
+            <input type="url" id="prod-image" class="form-input" placeholder="https://example.com/image.jpg">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Badge (e.g. Sale, New, Bestseller)</label>
+            <input type="text" id="prod-badge" class="form-input" placeholder="Trending">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea id="prod-desc" class="form-textarea" rows="2" placeholder="Product details, specs, sizes..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-white" style="width: 100%; background: var(--primary); color: white;">
+            ➕ Add Product to Store
+          </button>
+        </form>
+
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 12px; color: var(--text-muted);">Reset inventory back to initial default items:</span>
+          <button class="btn btn-white" style="border: 1px solid var(--danger); color: var(--danger); font-size: 12px; padding: 6px 12px;" onclick="resetToDefaultProducts()">
+            🔄 Reset Store Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Us Modal -->
+  <div class="modal-overlay" id="contact-modal">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3>📞 Contact Trendy Shopping Point</h3>
+        <button class="close-btn" onclick="closeModal('contact-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Store Info Card -->
+        <div style="background: linear-gradient(135deg, #6366f1, #ec4899); border-radius: var(--radius-md); padding: 20px; color: white; margin-bottom: 20px; text-align: center;">
+          <div style="font-size: 40px; margin-bottom: 8px;">🛍️</div>
+          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">Trendy Shopping Point</h3>
+          <p style="font-size: 13px; opacity: 0.9;">Pens • Pencils • Slippers • Bags • Fancies</p>
+        </div>
+
+        <!-- Contact Details -->
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-page);">
+            <div style="font-size: 28px;">📞</div>
+            <div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 2px;">Phone / WhatsApp</div>
+              <a href="tel:+919944383508" style="font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none;">+91 9944383508</a>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-page);">
+            <div style="font-size: 28px;">🕐</div>
+            <div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 2px;">Store Hours</div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">Monday – Saturday: 9 AM – 8 PM</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Sunday: 10 AM – 5 PM</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-page);">
+            <div style="font-size: 28px;">🏪</div>
+            <div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 2px;">Products Available</div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">Pens, Pencils (Apsara, Natraj & more)</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Slippers, Bags, Fancy Gift Items</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Contact Actions -->
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="https://wa.me/919944383508?text=Hello%20Trendy%20Shopping%20Point,%20I%20want%20to%20place%20an%20order" target="_blank" class="btn btn-whatsapp" style="width: 100%; justify-content: center; font-size: 15px;">
+            💬 Order on WhatsApp: +91 9944383508
+          </a>
+          <a href="tel:+919944383508" class="btn btn-white" style="width: 100%; justify-content: center; font-size: 15px; border: 1.5px solid var(--border);">
+            📞 Call Now: +91 9944383508
+          </a>
+        </div>
+
+        <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 14px;">
+          ✨ Fast responses on WhatsApp • Bulk & retail orders welcome • Local delivery available
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Quick Button -->
+  <a href="https://wa.me/919944383508?text=Hello%20Trendy%20Shopping%20Point,%20I%20have%20an%20inquiry%20regarding%20your%20products" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp (+91 9944383508)">
+    💬
+  </a>
+
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
